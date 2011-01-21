@@ -1,9 +1,7 @@
 # encoding: utf-8
 
-require 'hmac'
-require 'hmac-sha2'
+require 'openssl'
 require 'base64'
-
 
 class Sns
   class AwsCredentials
@@ -15,9 +13,10 @@ class Sns
     end
   
     def sign(query_string, path='/', method='GET')
-      hmac = HMAC::SHA256.new(@secret_key)
-      hmac.update([method, @host, path, query_string].join("\n"))
-      signature = Base64.encode64(hmac.digest).chomp
+      digest = OpenSSL::HMAC.new(@secret_key, OpenSSL::Digest::SHA256.new)
+      digest.update([method, @host, path, query_string].join("\n"))
+
+      Base64.encode64(digest.digest).chomp
     end
   end
 end
