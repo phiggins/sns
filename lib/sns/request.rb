@@ -2,8 +2,7 @@
 
 require 'cgi'
 require 'time'
-require 'typhoeus'
-
+require 'net/http'
 
 class Sns
   class Request
@@ -22,8 +21,8 @@ class Sns
   private
   
     def get(url)
-      response = Typhoeus::Request.get(url)
-      case response.code
+      response = Net::HTTP.get_response(URI(url))
+      case response.code.to_i
       when 200 then :ok
       when 400 then raise InvalidParameterError
       when 403 then raise AuthorizationError

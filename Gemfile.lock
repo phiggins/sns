@@ -2,14 +2,10 @@ PATH
   remote: .
   specs:
     sns (0.0.1)
-      typhoeus
 
 GEM
   remote: http://rubygems.org/
   specs:
-    rack (1.2.1)
-    typhoeus (0.1.31)
-      rack
 
 PLATFORMS
   ruby
@@ -17,4 +13,3 @@ PLATFORMS
 DEPENDENCIES
   bundler (>= 1.0.0)
   sns!
-  typhoeus
