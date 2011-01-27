@@ -24,11 +24,11 @@ class Sns
       response = Net::HTTP.get_response(URI(url))
       case response.code.to_i
       when 200 then :ok
-      when 400 then raise InvalidParameterError
-      when 403 then raise AuthorizationError
-      when 404 then raise NotFoundError
-      when 500 then raise InternalError
-      else raise UndefinedError
+      when 400 then raise InvalidParameterError, response.body
+      when 403 then raise AuthorizationError, response.body
+      when 404 then raise NotFoundError, response.body
+      when 500 then raise InternalError, response.body
+      else raise UndefinedError, response.body
       end
     end
   
